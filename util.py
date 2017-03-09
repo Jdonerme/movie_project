@@ -1,3 +1,4 @@
+import numpy as np
 GENRE_MAP = {'Unknown' : 0, 'Action' : 1, 'Adventure' : 2, 'Animation' : 3, \
 'Childrens' : 4, 'Comedy' : 5, 'Crime': 6, 'Documentary' : 7, 'Drama' : 8, \
 'Fantasy' : 9, 'Film-Noir' : 10, 'Horror' : 11, 'Musical' : 12, 'Mystery' : 13, \
@@ -106,3 +107,25 @@ def get_categories(genres_desired=['Animation', 'Comedy', 'Musical']):
 
     rating_info = get_ratings_from_ids(top, pop, genre_lists)
     return ratings_array, rating_info
+    
+def get_category_ids(genres_desired=['Animation', 'Comedy', 'Musical']):
+    movies, _, genre_lists = get_movie_data(genres_desired)
+    data_array, ratings_array, num_ratings, avg_ratings = get_rating_data(genres_desired)
+    
+    # get top and most popular movies
+    top = sorted(movies, key=avg_ratings.get, reverse=True)[:10]
+    pop = sorted(movies, key=num_ratings.get, reverse=True)[:10]
+    # get 10 random movies
+    np.random.shuffle(movies)
+    movies = movies[:10]
+    
+    # get 10 random movies for each genre
+    g1, g2, g3 = genre_lists[0], genre_lists[1], genre_lists[2]
+    np.random.shuffle(g1)
+    np.random.shuffle(g2)
+    np.random.shuffle(g3)
+    
+    g1, g2, g3 = g1[:10], g2[:10], g3[:10], 
+    ids = (top, pop, g1, g2, g3)
+    return movies, ids
+get_category_ids()
