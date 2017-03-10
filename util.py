@@ -13,14 +13,14 @@ GENRE_MAP = {'Unknown' : 0, 'Action' : 1, 'Adventure' : 2, 'Animation' : 3, \
 
     """
 def get_movie_data(genres_desired):
-    assert len(genres_desired) == 3
+    assert len(genres_desired) <= 3
     movies = []
     titles = {}
     genre_lists= ([], [], [])
     with open("movies.txt") as f:
         for line in f:
             data = line.strip("\n").split("\t")
-            mov_id = int(data[0])
+            mov_id = int(data[0]) - 1
             movies.append(mov_id)
             titles[mov_id] = data[1]
             genre_list = data[2:]
@@ -30,7 +30,7 @@ def get_movie_data(genres_desired):
                     genre_lists[i].append(mov_id)
     return movies, titles, genre_lists
     
-""" Gets Rating Dta from importing from the data file 
+""" Gets Rating data from importing from the data file 
     
     """
 def get_rating_data(genres_desired):
@@ -46,7 +46,7 @@ def get_rating_data(genres_desired):
     with open("data.txt") as f:
         for line in f:
             data = line.strip("\n").split("\t")
-            mov_id = int(data[1])
+            mov_id = int(data[1]) - 1
             rating = float(data[2])
             # update how rated the movie is
             num_ratings[mov_id] += 1
@@ -56,8 +56,8 @@ def get_rating_data(genres_desired):
             avg_ratings[mov_id] = new_rating
             
             # update array of all ratings
-            ratings_array.append(int(data[2]))
-            temp = (int(data[0]), int(data[1]), int(data[2]))
+            ratings_array.append(rating)
+            temp = (int(data[0]) - 1, mov_id, rating)
         
            
             # update array we'll use for matrix factorization
@@ -109,12 +109,13 @@ def get_categories(genres_desired=['Animation', 'Comedy', 'Musical']):
     return ratings_array, rating_info
     
 def get_category_ids(genres_desired=['Animation', 'Comedy', 'Musical']):
-    movies, _, genre_lists = get_movie_data(genres_desired)
+    movies, titles, genre_lists = get_movie_data(genres_desired)
     data_array, ratings_array, num_ratings, avg_ratings = get_rating_data(genres_desired)
     
     # get top and most popular movies
     top = sorted(movies, key=avg_ratings.get, reverse=True)[:10]
     pop = sorted(movies, key=num_ratings.get, reverse=True)[:10]
+  
     # get 10 random movies
     np.random.shuffle(movies)
     movies = movies[:10]
@@ -127,5 +128,5 @@ def get_category_ids(genres_desired=['Animation', 'Comedy', 'Musical']):
     
     g1, g2, g3 = g1[:10], g2[:10], g3[:10], 
     ids = (top, pop, g1, g2, g3)
-    return movies, ids
+    return movies, ids, titles
 get_category_ids()
