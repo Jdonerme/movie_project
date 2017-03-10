@@ -1,6 +1,6 @@
 import prob2utils as HW5utils
-import matplotlib
-matplotlib.use('TkAgg')
+#import matplotlib
+#matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import util as ut
 import numpy as np
@@ -49,11 +49,10 @@ def make_visual(movies, plot_title, titles, filename):
 
         new_x = V_tilde[0][movie]
         new_y = V_tilde[1][movie]
-        plt.annotate(titles[movie], xy = (new_x, new_y), size=7)
+        plt.annotate(titles[movie], xy=(new_x, new_y), size=7)
 
         x.append(new_x)
         y.append(new_y)
-
 
     plt.title(plot_title)
     plt.xlabel('X') # Should probably be a better name
