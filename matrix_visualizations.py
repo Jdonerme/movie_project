@@ -33,7 +33,7 @@ def apply_svd():
     U_tilde = np.dot(A[:, [0, 1]].transpose(), V)
     return V_tilde, U_tilde
 
-def make_visual(movies, plot_title, titles):
+def make_visual(movies, plot_title, titles, filename):
     V_tilde, U_tilde = apply_svd()
 
     # Plot projected  V
@@ -59,6 +59,7 @@ def make_visual(movies, plot_title, titles):
     plt.xlabel('X') # Should probably be a better name
     plt.ylabel('Y') # Same
     plt.scatter(x, y)
+    plt.savefig(filename)
     plt.show()
 
 
@@ -67,21 +68,21 @@ def main():
     top, pop, g1, g2, g3 = ids
 
     # Part A
-    make_visual(movies, 'Ten Random Movies Matrix Factorization Visualization', titles)
+    make_visual(movies, 'Ten Random Movies Matrix Factorization Visualization', titles, 'visuals/random.png')
 
     # Part B
-    make_visual(pop, 'Ten Most Popular Movies Matrix Factorization Visualization', titles)
+    make_visual(pop, 'Ten Most Popular Movies Matrix Factorization Visualization', titles, 'visuals/pop.png')
 
     # Part C
-    make_visual(top, 'Ten Best Movies Matrix Factorization Visualization', titles)
+    make_visual(top, 'Ten Best Movies Matrix Factorization Visualization', titles, 'visuals/top.png')
 
     # Part D, genre 1
-    make_visual(g1, 'Ten Animation Movies Matrix Factorization Visualization', titles)
+    make_visual(g1, 'Ten Animation Movies Matrix Factorization Visualization', titles, 'visuals/animation.png')
 
     # Part D, genre 2
-    make_visual(g2, 'Ten Comedy Movies Matrix Factorization Visualization', titles)
+    make_visual(g2, 'Ten Comedy Movies Matrix Factorization Visualization', titles, 'visuals/comedy.png')
 
     # Part D, genre 3
-    make_visual(g3, 'Ten Musical Movies Matrix Factorization Visualization', titles)
+    make_visual(g3, 'Ten Musical Movies Matrix Factorization Visualization', titles, 'visuals/musical.png')
 
 main()
