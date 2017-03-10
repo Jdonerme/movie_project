@@ -41,23 +41,21 @@ def make_visual(movies, plot_title, titles, filename):
     print(len(V_tilde[0]))
     print(V_tilde)
 
-    x = []
-    y = []
+    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'k', '#facade', 'burlywood', 'chartreuse']
+    i = 0
     print(len(movies))
     for movie in movies:
         print(movie)
 
-        new_x = V_tilde[0][movie]
-        new_y = V_tilde[1][movie]
-        plt.annotate(titles[movie], xy=(new_x, new_y), size=7)
-
-        x.append(new_x)
-        y.append(new_y)
+        x = V_tilde[0][movie]
+        y = V_tilde[1][movie]
+        plt.scatter(x, y, color=colors[i], label=titles[movie], s=100)
+        i += 1
 
     plt.title(plot_title)
     plt.xlabel('X') # Should probably be a better name
     plt.ylabel('Y') # Same
-    plt.scatter(x, y)
+    plt.legend(bbox_to_anchor=(1, 1), loc='upper right')
     plt.savefig(filename)
     plt.show()
 
